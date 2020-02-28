@@ -5,14 +5,15 @@
  */
 class SinglyLinkedList<E extends Comparable<E>>{ 
     private Node<E> head;
-    
+    int size = 0;
     //Constructor
     public SinglyLinkedList(){
         this.head = null;
     }
 
     //Appends the specified element to the end of this list.
-    public boolean add(E item){ 
+    public boolean add(E item){
+        size++;
         if (head == null){
             head = new Node<E>(item,null);
             return true;
@@ -51,6 +52,7 @@ class SinglyLinkedList<E extends Comparable<E>>{
     
     //Removes the element at the specified position in this list.
     public E remove(int index){
+        index--;
         Node<E> curr = head;
         if (index == 0){
             head = curr.getNext();
@@ -83,13 +85,69 @@ class SinglyLinkedList<E extends Comparable<E>>{
 
     //Returns the number of elements in this list.
     public int size(){
+        return size;
+    }
+
+    public void printLast(int n){
         Node<E> curr = head;
-        int index = 0;
-        while (curr != null){
+        for (int i = 0; i<(size-n);i++){
             curr = curr.getNext();
-            index++;
         }
-        return index;
+        for (int i = 0; i<(n);i++){
+            System.out.println(curr.getItem());
+            curr = curr.getNext();
+        }
+    }
+    public void join(SinglyLinkedList ll){
+        Node<E> curr = head;
+        for (int i = 0; i<size-1;i++){
+            curr = curr.getNext();
+        }
+        curr.setNext(ll.head);
+    }
+
+    public void swap(int m, int n){
+        E valm = get(m);
+        E valn = get(n);
+        Node<E> curr = head;
+        for (int i = 0; i<m;i++){
+            curr = curr.getNext();
+        }
+        curr.setItem(valn);
+
+        curr = head;
+        for (int i = 0; i<n;i++){
+            curr = curr.getNext();
+        }
+        curr.setItem(valm);
+    }
+
+    public Object[] toArray(){
+        Object[] retarray;
+        retarray = new Object[size];
+        Node<E> curr = head;
+        for (int i = 0; i<size; i++){
+            retarray[i] = curr.getItem();
+            curr = curr.getNext();
+        }
+        return retarray;
+    }
+
+    public <T> T[] toArray(T[] a) throws ArrayStoreException, NullPointerException{
+        if (a==null){
+            throw new NullPointerException("null array");
+        }
+        Node<E> curr = head;
+        for (int i = 0; i<size; i++){
+            try{
+                a[i] = (T)(curr.getItem());
+            }
+            catch (Exception E){
+                throw new ArrayStoreException();
+            }
+            curr = curr.getNext();
+        }
+        return a;
     }
 //------------------------------------------------------------------------------         
     //Returns String representation of the list.    
