@@ -9,7 +9,6 @@ class EngFrench{
         BufferedReader br1 = new BufferedReader(new FileReader(path));
         String line;
         while ((line = br1.readLine()) != null && line!=""){
-            System.out.println(line);
             String[] parts = line.split("\t", 2);
             translations.put(parts[0].trim(),parts[1].trim());
         }
